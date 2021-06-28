@@ -4,25 +4,13 @@
       "id": 1,
       "title": "Learning Vue 3",
       "description": "training vue js version 3 thanh pro",
-      "published": true
-    },
-    {
-      "id": 2,
-      "title": "id nihil consequatur molestias animi provident",
-      "description": "nisi error delectus possimus ut eligendi vitae\nplaceat eos harum cupiditate facilis reprehenderit voluptatem beatae\nmodi ducimus quo illum voluptas eligendi\net nobis quia fugit",
-      "published": true
+      "published": false
     },
     {
       "id": 3,
       "title": "fuga nam accusamus voluptas reiciendis itaque",
       "description": "ad mollitia et omnis minus architecto odit\nvoluptas doloremque maxime aut non ipsa qui alias veniam\nblanditiis culpa aut quia nihil cumque facere et occaecati\nqui aspernatur quia eaque ut aperiam inventore",
       "published": true
-    },
-    {
-      "id": 4,
-      "title": "provident vel ut sit ratione est",
-      "description": "debitis et eaque non officia sed nesciunt pariatur vel\nvoluptatem iste vero et ea\nnumquam aut expedita ipsum nulla in\nvoluptates omnis consequatur aut enim officiis in quam qui",
-      "published": false
     },
     {
       "id": 5,

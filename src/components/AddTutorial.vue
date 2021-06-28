@@ -34,10 +34,13 @@
     </div>
 </template>
 
-<script>
-import TutorialDataService from '../services/TutorialDataService';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import TutorialDataService from '@/services/TutorialDataService';
+import Tutorial from '@/types/Tutorial';
+import ResponseData from '@/types/ResponseData';
 
-export default {
+export default defineComponent({
     name: 'add-tutorial',
     data() {
         return {
@@ -46,7 +49,7 @@ export default {
                 title: "",
                 description: "",
                 published: false
-            },
+            } as Tutorial,
             submitted: false
         };
     },
@@ -58,21 +61,21 @@ export default {
             };
 
             TutorialDataService.create(data)
-                .then((response) => {
+                .then((response: ResponseData) => {
                     this.tutorial.id = response.data.id;
                     console.log(response.data);
                     this.submitted = true;
                 })
-                .catch(e => {
+                .catch((e: Error) => {
                     console.log(e);
                 });
         },
         newTutorial: function() {
             this.submitted = false;
-            this.tutorial = {};
+            this.tutorial = {} as Tutorial;
         }
     }
-};
+});
 </script>
 
 <style>

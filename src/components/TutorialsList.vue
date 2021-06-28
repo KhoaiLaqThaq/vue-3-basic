@@ -1,16 +1,15 @@
 <template>
     <div class="list row">
         <div class="col-md-8">
-            <div class="input-group mb-3">
-                <input
+            <div class="input-group cmb-3">
+                <input 
                     type="text"
                     class="form-control"
-                    placeholder="Search by Title"
+                    placeholder="Search for Title" 
                     v-model="title"
                 />
                 <div class="input-group-append">
-                    <button
-                        class="btn btn-outline-secondary"
+                    <button class="btn btn-outline-secondary"
                         type="button"
                         @click="searchTitle"
                     >
@@ -20,108 +19,135 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h4>Tutorials List</h4>
-            <ul class="list-group">
-                <li
-                    class="list-group-item"
-                    :class="{ active: index == currentIndex }"
+            <h4>Tutorial List</h4>
+            <ul class="list-group" v-if="loading">
+                <li class="list-group-item"
+                    :class="{ active: index === currentIndex }"
                     v-for="(tutorial, index) in tutorials"
                     :key="index"
-                    @click="setActiveTutorial(tutorial, index)"
+                    @click="setActiveTutorial(tutorial, index);"
                 >
                     {{ tutorial.title }}
                 </li>
             </ul>
+            <div class="spinner-border text-primary" role="status" v-else>
+                <span class="sr-only">Loading...</span>
+            </div>
+            <br />
 
-            <button class="m-3 btn btn-sm btn-danger" v-if="tutorials.length > 0" @click="removeAllTutorials">
-                Remove All
+            <button class="btn btn-danger mt-2"
+                type="button"
+                @click="removeAllTutorials();"
+            >
+                Remove All Tutorials
             </button>
         </div>
         <div class="col-md-6">
-            <div v-if="currentTutorial">
+            <div v-if="currentTutorial.id">
                 <h4>Tutorial</h4>
                 <div>
-                    <label>
-                        <strong>Title:</strong> {{ currentTutorial.title }}
-                    </label>
-                    <div class="form-group">
-                        <strong>Description:</strong>
-                        <p>{{ currentTutorial.description }}</p>
-                    </div>
+                    <label><strong>Title: </strong></label>
+                    {{ currentTutorial.title }}
                 </div>
-                <button class="btn btn-primary" @click="goToDetails">Go to details</button>
+                <div>
+                    <label for=""><strong>Description: </strong></label>
+                    {{ currentTutorial.description }} 
+                </div>
+                <div>
+                    <label><strong>Status: </strong></label>
+                    {{ currentTutorial.published ? "Published" : "Pending" }}
+                </div>
+
+                <router-link
+                    :to="'/tutorials/' + currentTutorial.id"
+                    class="badge badge-warning"
+                >
+                    Edit
+                </router-link>
+            </div>
+            <div v-else>
+                <br/>
+                <p>Please click on a Tutorial...</p>
             </div>
         </div>
     </div>
 </template>
 
-<script>
-import TutorialDataService from '../services/TutorialDataService';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import TutorialDataService from '@/services/TutorialDataService';
+import Tutorial from '@/types/Tutorial';
+import ResponseData from '@/types/ResponseData';
 
-export default {
-    name: "tutorials-list",
+export default defineComponent({
+    name: 'tutorials-list',
     data() {
         return {
-            tutorials: [],
-            currentTutorial: null,
+            tutorials: [] as Tutorial[],
+            currentTutorial: {} as Tutorial,
             currentIndex: -1,
-            title: ""
+            title: '',
+            loading: false
         };
     },
     methods: {
-        retrieveTutorials: function() {
+        retrieveTutorials() {
             TutorialDataService.getAll()
-                .then(response => {
-                    this.tutorials = response.data;
-                    console.log(response.data);
-                })
-                .catch(e => {
-                    console.log(e);
-                });
+            .then((response: ResponseData) => {
+                this.loading = true;
+                this.tutorials = response.data;
+                console.log("data response: ", response.data);
+            })
+            .catch((e: Error) => {
+                this.loading = false;
+                console.log("Cannot loading tutorials", e);
+            });
         },
 
-        refreshList: function() {
+        refreshList() {
             this.retrieveTutorials();
-            this.currentTutorial = null;
+            this.currentTutorial = {} as Tutorial;
             this.currentIndex = -1;
         },
 
-        setActiveTutorial: function(tutorial, index) {
+        setActiveTutorial(tutorial: Tutorial, index = -1) {
             this.currentTutorial = tutorial;
-            this.currentIndex = tutorial ? index : -1;
+            this.currentIndex = index;
         },
 
-        removeAllTutorials: function() {
+        removeAllTutorials() {
             TutorialDataService.deleteAll()
-                .then(response => {
-                    console.log(response.data);
-                    this.refreshList();
-                })
-                .catch(e => {
-                    console.log(e);
-                });
+            .then((response: ResponseData) => {
+                console.log(response.data);
+                this.refreshList();
+            })
+            .catch((e: Error) => {
+                console.log(e);
+            });
         },
 
-        searchTitle: function() {
-            TutorialDataService.findByTitle(this.title)
-                .then(response => {
+        searchTitle() {
+            if (this.title != '')
+                TutorialDataService.findByTitle(this.title)
+                .then((response: ResponseData) => {
                     this.tutorials = response.data;
-                    this.setActiveTutorial(null);
+                    this.setActiveTutorial({} as Tutorial, -1);
                     console.log(response.data);
                 })
-                .catch(e => {
+                .catch((e: Error) => {
                     console.log(e);
                 });
+            else
+                this.refreshList();
         },
-
-        goToDetails: function() {
-            this.$router.push('/tutorials/' + this.currentTutorial.id)
-        }
     },
-    mounted: function() {
+    beforeMount() {
         this.retrieveTutorials();
-    }
-};
+    },
+    mounted() {
+        console.log("Mounted!");
+    },
+});
 </script>
 
 <style>
