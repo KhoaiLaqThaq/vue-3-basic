@@ -4,10 +4,10 @@
             <router-link to="/" class="navbar-brand">Logo Learning</router-link>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                <router-link to="/tutorials" class="nav-link">Tutorials</router-link>
+                    <router-link to="/" class="nav-link">Home</router-link>
                 </li>
                 <li class="nav-item">
-                <router-link to="/tutorial/add" class="nav-link">Add</router-link>
+                    <router-link to="/shop" class="nav-link">Checkout to cart</router-link>
                 </li>
             </ul>
         </nav>
@@ -15,9 +15,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 
 export default defineComponent({
-    name: 'Header'
+    name: "Header"
 });
 </script>

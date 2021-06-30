@@ -7,20 +7,15 @@ import {
 const routes: Array<RouteRecordRaw> = [
     {
         path: "/",
-        alias: '/tutorials',
-        name: 'Tutorials',
-        component: () => import("./components/TutorialsList.vue"), 
+        // alias: '/tutorials',
+        name: 'Home',
+        component: () => import("./components/Home.vue"), 
     },
     {
-        path: "/tutorials/:id",
-        name: 'Tutorial details',
-        component: () => import("./components/Tutorial.vue"),
-    },
-    {
-        path: "/tutorial/add",
-        name: 'Add new Tutorial',
-        component: () => import("./components/AddTutorial.vue"),
-    },
+        path: "/shop",
+        name: 'Shopping Cart',
+        component: () => import("./components/ShoppingCart.vue"),
+    }
 ] ;
 
 const router = createRouter({
