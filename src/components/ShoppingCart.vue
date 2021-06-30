@@ -1,12 +1,18 @@
 <template>
   <div class="home-container">
         <div class="row">
-            <div class="col-md-8 pt-5">
+            <div class="col-md-8 pt-5" v-if="cart.length > 0">
                 <CartItem
                     v-for="product in cart"
                     :product="product"
                     :key="product.id"
                 />
+            </div>
+            <div class="col-md-8 pt-5" v-else>
+                <p class="text-center d-block">Your cart is empty!</p>
+                <router-link to="/" class="btn btn-primary btn-block">
+                    Buy now!
+                </router-link>
             </div>
             <div class="col-md-4 pt-5">
                 <Cart />
@@ -40,7 +46,3 @@ export default defineComponent({
     }
 });
 </script>
-
-<style>
-
-</style>

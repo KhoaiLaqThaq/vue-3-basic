@@ -1,24 +1,26 @@
 <template>
 	<div class="card">
+		<div class="card-header">
+			<h5 class="card-title">Your cart</h5>
+		</div>
 		<div class="card-body">
-			<h5 class="card-title">Your card</h5>
 			<p v-if="cart.length === 0">
 				Your Cart is Empty
 			</p>
+			<ul class="list-group list-group-flush">
+				<li
+					v-for="item in cart"
+					:key="item.id"
+					class="list-group-item d-flex justify-content-between align-items-center"
+				>
+					{{ item.name }}
+					<span class="badge badge-primary badge-pill">{{ item.quantity }}</span>
+				</li>
+				<li class="list-group-item d-flex justity-content-between align-items center">
+					Price &nbsp; <b>${{ totalPrice }}</b>
+				</li>
+			</ul>
 		</div>
-		<ul class="list-group list-group-flush">
-			<li
-				v-for="item in cart"
-				:key="item.id"
-				class="list-group-item d-flex justify-content-between align-items-center"
-			>
-				{{ item.name }}
-				<span class="badge badge-primary badge-pill">{{ item.quantity }}</span>
-			</li>
-			<li class="list-group-item d-flex justity-content-between align-items center">
-				Price &nbsp; <b>${{ totalPrice }}</b>
-			</li>
-		</ul>
 		<div class="card-body">
 			<router-link
 				to="/shop"

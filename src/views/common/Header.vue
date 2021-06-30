@@ -9,6 +9,9 @@
                 <li class="nav-item">
                     <router-link to="/shop" class="nav-link">Checkout to cart</router-link>
                 </li>
+                <li class="nav-item">
+                    <router-link to="/about" class="nav-link">About me</router-link>
+                </li>
             </ul>
         </nav>
     </div>

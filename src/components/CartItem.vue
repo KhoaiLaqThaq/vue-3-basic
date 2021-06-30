@@ -62,18 +62,20 @@ export default defineComponent({
 
         let itemQuantity = computed(function() {
             let getProduct = cart.value.filter((item: any) => item.id === props.product.id);
+            console.log("currentProduct: ", getProduct[0]);
+            
             return getProduct[0].quantity;
         });
 
         function changeQuantity(action = 'add') {
             if (action === 'add') {
-                // props.product.quantity = props.product.quantity + 1;
-                store.commit("addProductQuantity", props.product.quantity);
+                console.log("increase: ", props.product);
+                
+                store.commit("increasementProductQuantity", props.product);
                 store.commit("updateCartItem", props.product);
             } else {
                 if (props.product.quantity > 1) {
-                    // props.product.quantity = props.product.quantity - 1;
-                    store.commit("decreamentProductQuantity", props.product.quantity);
+                    store.commit("decreasementProductQuantity", props.product);
                     store.commit("updateCartItem", props.product);
                 } else {
                     store.commit("removeCartItem", props.product);

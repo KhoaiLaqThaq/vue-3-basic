@@ -58,7 +58,6 @@ export default createStore({
                 if (cartItem.id === updateItem.id) {
                     return updateItem;
                 }
-
                 return cartItem;
             });
         },
@@ -67,12 +66,13 @@ export default createStore({
                 return cartItem.id !== item.id;
             });
         },
-        addProductQuantity(state, item) {
-            state.cart.product.quantity =  item.quantity + 1;
-            return 
+        increasementProductQuantity(state, item) {
+            console.log("item: ", item);
+            state.cart[item.id - 1].quantity = item.quantity + 1;
         },
-        decreamentProductQuantity(state, item) {
-            state.cart.product.quantity = item.quantity - 1;
+        decreasementProductQuantity(state, item) {
+            console.log("item: ", item);
+            state.cart[item.id - 1].quantity = item.quantity - 1;
         }
     },
 });
