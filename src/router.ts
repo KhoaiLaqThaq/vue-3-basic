@@ -1,31 +1,5 @@
-import {
-    createWebHistory,
-    createRouter,
-    RouteRecordRaw
-} from 'vue-router';
+import Vue from 'vue';
+import Router from 'vue-router';
+import Home from '@/views/pages/Home.vue';
 
-const routes: Array<RouteRecordRaw> = [
-    {
-        path: "/",
-        // alias: '/tutorials',
-        name: 'Home',
-        component: () => import("./components/Home.vue"), 
-    },
-    {
-        path: "/shop",
-        name: 'Shopping Cart',
-        component: () => import("./components/ShoppingCart.vue"),
-    },
-    {
-        path: "/about",
-        name: "About me",
-        component: () => import("./components/About.vue")
-    }
-] ;
-
-const router = createRouter({
-    history: createWebHistory(),
-    routes
-});
-
-export default router;
+Vue.use
